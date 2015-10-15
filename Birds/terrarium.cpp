@@ -224,7 +224,12 @@ terrarium::terrarium(): airspace(grid(400,8,400)) {
     flocks.push_back(flock(airspace,150, 4800,100,4200,60, 4.0,0.8,0.08, v3<double>(6000,0,10000), wind,windc, v3<double>(0.0,0.0,80.0),0.0,50.0));
     flocks.push_back(flock(airspace,120, 4200,120,4800,60, 4.0,0.8,0.08, v3<double>(10000,0,6000), wind,windc, v3<double>(80.0,0.0,0.0),0.0,-50.0));*/
     
-    wind = {0.0, 0.0, 0.0};
+    /*wind = {-10.0, 80.0, 0.0};
+    windc = 0.1;
+    
+    flocks.push_back(flock(airspace,150, 4800,100,4200,60, 6.0,0.8,0.08, v3<double>(6000,0,10000), wind,windc, v3<double>(0.0,0.0,80.0),0.0,50.0));*/
+
+    wind = {00.0, 0.0, 0.0};
     windc = 0.1;
     
     flocks.push_back(flock(airspace,80, 4800,100,4200,60, 6.0,0.8,0.08, v3<double>(6000,0,10000), wind,windc, v3<double>(0.0,0.0,80.0),0.0,50.0));

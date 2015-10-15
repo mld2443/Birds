@@ -121,6 +121,12 @@ void key(const unsigned char c, const int x, const int y) {
                 lookDir = v3<float>(1, 0, 0).rotateZ(camPhi).rotateY(camTheta);
                 eyePos = {4500, 500, 4500};
             }
+            glutPostRedisplay();
+            break;
+            
+        case '1':
+            follow_flock = !follow_flock;
+            glutPostRedisplay();
             break;
             
         case 'w':
