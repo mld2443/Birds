@@ -1,6 +1,6 @@
 //
 //  terrarium.cpp
-//  Flocks
+//  Birds
 //
 //  Created by Matthew Dillard on 10/12/15.
 //
@@ -24,59 +24,6 @@ void terrarium::draw_lights() {
     glLightfv(GL_LIGHT1, GL_AMBIENT, light1color);
     glLightfv(GL_LIGHT1, GL_DIFFUSE, light1color);
     glLightfv(GL_LIGHT1, GL_SPECULAR, light1color);
-}
-
-void terrarium::draw_bounds() {
-    //Draw the box
-    GLfloat white[] = { 1.0, 1.0, 1.0 };
-    
-    glBegin(GL_LINE_STRIP);
-    //bottom face
-    glMaterialfv(GL_FRONT, GL_AMBIENT, white);
-    glVertex3f(boxxh, boxyl, boxzh);
-    glVertex3f(boxxh, boxyl, boxzl);
-    glVertex3f(boxxl, boxyl, boxzl);
-    glVertex3f(boxxl, boxyl, boxzh);
-    glVertex3f(boxxh, boxyl, boxzh);
-    glEnd();
-    
-    glBegin(GL_LINE_STRIP);
-    //top face
-    glMaterialfv(GL_FRONT, GL_AMBIENT, white);
-    glVertex3f(boxxh, boxyh, boxzh);
-    glVertex3f(boxxl, boxyh, boxzh);
-    glVertex3f(boxxl, boxyh, boxzl);
-    glVertex3f(boxxh, boxyh, boxzl);
-    glVertex3f(boxxh, boxyh, boxzh);
-    glEnd();
-    
-    glBegin(GL_LINE_STRIP);
-    //back left
-    glMaterialfv(GL_FRONT, GL_AMBIENT, white);
-    glVertex3f(boxxl, boxyl, boxzl);
-    glVertex3f(boxxl, boxyh, boxzl);
-    glEnd();
-    
-    glBegin(GL_LINE_STRIP);
-    //back right
-    glMaterialfv(GL_FRONT, GL_AMBIENT, white);
-    glVertex3f(boxxh, boxyl, boxzl);
-    glVertex3f(boxxh, boxyh, boxzl);
-    glEnd();
-    
-    glBegin(GL_LINE_STRIP);
-    //front right
-    glMaterialfv(GL_FRONT, GL_AMBIENT, white);
-    glVertex3f(boxxh, boxyl, boxzh);
-    glVertex3f(boxxh, boxyh, boxzh);
-    glEnd();
-    
-    glBegin(GL_LINE_STRIP);
-    //front left
-    glMaterialfv(GL_FRONT, GL_AMBIENT, white);
-    glVertex3f(boxxl, boxyl, boxzh);
-    glVertex3f(boxxl, boxyh, boxzh);
-    glEnd();
 }
 
 void terrarium::draw_ground() {
@@ -130,7 +77,7 @@ void terrarium::draw_ground() {
     } glEnd();
 }
 
-void terrarium::draw_tree(const float x, const float y, const float z) {
+/*void terrarium::draw_tree(const float x, const float y, const float z) {
     GLfloat tree_ambient[] = { 0.05, 0.05, 0.05 };
     GLfloat tree_diffuse[] = { 0.3, 0.3, 0.3 };
     GLfloat tree_specular[] = { 0.3, 0.3, 0.3 };
@@ -175,7 +122,7 @@ void terrarium::draw_tree(const float x, const float y, const float z) {
         glutSolidSphere(60, 64, 64);
         
     } glPopMatrix();
-}
+}*/
 
 void terrarium::draw_rock(const int x, const int y, const int z, const float h, const int w, const int l, const int r) {
     //int cell[] = {x/25, y/25, z/25};
@@ -257,8 +204,8 @@ void terrarium::draw_rock(const int x, const int y, const int z, const float h, 
     } glPopMatrix();
 }
 
-terrarium::terrarium() {
-    quadric = gluNewQuadric();
+terrarium::terrarium(): airspace(grid(400,8,400)) {
+    //quadric = gluNewQuadric();
     
     //Initialize scene variables
     boxxl = 0;
@@ -272,18 +219,17 @@ terrarium::terrarium() {
     rdepth = 5000;
     rwidth = 25;
     
-    for (int x = 0; x < 400; x++) {
-        airspace.push_back(vector<vector<grid>>(8, vector<grid>(400, grid())));
-        for (int z = 0; z < 400; z++)
-            airspace[x][0][z].add_potential(25);
-    }
-    
-    flocks.push_back(flock(airspace,100,5000,100,5000,30,v3f(0,0,-5)));
+    flocks.push_back(flock(airspace,100,5000,100,5000,60,0.01,0.1,0.01,v3<double>(0,0.5,-0.5)));
 }
 
 void terrarium::step(const float t) {
     for (auto &f : flocks)
-        f.calc_velocities(airspace, t);
+        f.calc_velocities(airspace, 1, t);
+    
+    for (auto &f : flocks)
+        f.integrate(t);
+    
+    airspace.move_birds();
 }
 
 void terrarium::draw() {

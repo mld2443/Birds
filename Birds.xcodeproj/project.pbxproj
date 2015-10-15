@@ -32,10 +32,11 @@
 		C929EF681BCF88D2008095E3 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		C929EF6A1BCF88E1008095E3 /* terrarium.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = terrarium.h; sourceTree = "<group>"; };
 		C929EF6B1BCF8906008095E3 /* terrarium.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = terrarium.cpp; sourceTree = "<group>"; };
-		C929EF6D1BCF8919008095E3 /* v3f.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = v3f.h; sourceTree = "<group>"; };
 		C929EF6E1BCF892F008095E3 /* bird.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = bird.h; sourceTree = "<group>"; };
 		C929EF6F1BCF8944008095E3 /* flock.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = flock.h; sourceTree = "<group>"; };
 		C929EF701BCF895C008095E3 /* grid.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = grid.h; sourceTree = "<group>"; };
+		C929EF711BCF9F86008095E3 /* cell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cell.h; sourceTree = "<group>"; };
+		C929EF721BCFB78B008095E3 /* v3.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = v3.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,10 +76,11 @@
 				C929EF5F1BCF88B0008095E3 /* main.cpp */,
 				C929EF6A1BCF88E1008095E3 /* terrarium.h */,
 				C929EF6B1BCF8906008095E3 /* terrarium.cpp */,
-				C929EF6D1BCF8919008095E3 /* v3f.h */,
 				C929EF6E1BCF892F008095E3 /* bird.h */,
 				C929EF6F1BCF8944008095E3 /* flock.h */,
 				C929EF701BCF895C008095E3 /* grid.h */,
+				C929EF711BCF9F86008095E3 /* cell.h */,
+				C929EF721BCFB78B008095E3 /* v3.h */,
 			);
 			path = Birds;
 			sourceTree = "<group>";

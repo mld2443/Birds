@@ -1,6 +1,6 @@
 //
 //  main.cpp
-//  Flocks
+//  Birds
 //
 //  Created by Matthew Dillard on 10/12/15.
 //
@@ -15,12 +15,13 @@
 // timing information
 unsigned int steps_per_frame;
 double fps, timestep;
+bool play;
 
 // camera info
 GLfloat c_ratio;
 float movespeed;
 int camPhi, camTheta;
-v3f eyePos, lookDir;
+v3<float> eyePos, lookDir;
 
 // scene data
 int window;
@@ -56,12 +57,13 @@ void init() {
     steps_per_frame = 1;
     fps = 60.0;
     timestep = 1.0/(fps * steps_per_frame);
+    play = true;
     
     // looking and movement
     movespeed = 10.0;
     camTheta = 315;
     camPhi = -30;
-    lookDir = v3f(1, 0, 0).rotateZ(camPhi).rotateY(camTheta);
+    lookDir = v3<float>(1, 0, 0).rotateZ(camPhi).rotateY(camTheta);
     eyePos = {4500, 500, 4500};
     
     t = terrarium();
@@ -76,24 +78,23 @@ void resizeFunc(GLint newWidth, GLint newHeight) {
 void newFrame(const int id) {
     glutTimerFunc(1000.0/fps, newFrame, 1);
     
-    unsigned int step = 0;
-    
-    while (step < steps_per_frame) {
-        /*for (auto &g : pgens) {
-         g.spawn_particles(elapsed, timestep);
-         g.cull_particles(elapsed, boxxl, boxxh, boxzl, boxzh);
-         g.compute_accel(gravity, wind, windc, coef);
-         g.integrate(timestep, planes);
-         }*/
+    if (play) {
+        unsigned int step = 0;
         
-        step++;
+        while (step < steps_per_frame) {
+            t.step(timestep);
+            step++;
+        }
+        
+        glutPostRedisplay();
     }
-    
-    glutPostRedisplay();
 }
 
 void key(const unsigned char c, const int x, const int y) {
     switch (c) {
+        case ' ':
+            play = !play;
+            break;
         case 27:
             glutDestroyWindow(window);
             exit(0);
@@ -104,7 +105,7 @@ void key(const unsigned char c, const int x, const int y) {
             glutPostRedisplay();
             break;
         case 'a':
-            eyePos -= lookDir.cross(v3f(0,1,0)).normalize() * movespeed;
+            eyePos -= lookDir.cross(v3<float>(0,1,0)).normalize() * movespeed;
             glutPostRedisplay();
             break;
         case 's':
@@ -112,7 +113,7 @@ void key(const unsigned char c, const int x, const int y) {
             glutPostRedisplay();
             break;
         case 'd':
-            eyePos += lookDir.cross(v3f(0,1,0)).normalize() * movespeed;
+            eyePos += lookDir.cross(v3<float>(0,1,0)).normalize() * movespeed;
             glutPostRedisplay();
             break;
             
@@ -121,7 +122,7 @@ void key(const unsigned char c, const int x, const int y) {
             glutPostRedisplay();
             break;
         case 'A':
-            eyePos -= lookDir.cross(v3f(0,1,0)).normalize() * 2.0 * movespeed;
+            eyePos -= lookDir.cross(v3<float>(0,1,0)).normalize() * 2.0 * movespeed;
             glutPostRedisplay();
             break;
         case 'S':
@@ -129,7 +130,7 @@ void key(const unsigned char c, const int x, const int y) {
             glutPostRedisplay();
             break;
         case 'D':
-            eyePos += lookDir.cross(v3f(0,1,0)).normalize() * 2.0 * movespeed;
+            eyePos += lookDir.cross(v3<float>(0,1,0)).normalize() * 2.0 * movespeed;
             glutPostRedisplay();
             break;
             
@@ -143,14 +144,14 @@ void specialKey(const int c, const int x, const int y){
         case GLUT_KEY_UP:
             if (camPhi + 5 < 90) {
                 camPhi += 5;
-                lookDir = v3f(1,0,0).rotateZ(camPhi).rotateY(camTheta);
+                lookDir = v3<float>(1,0,0).rotateZ(camPhi).rotateY(camTheta);
                 glutPostRedisplay();
             }
             break;
         case GLUT_KEY_DOWN:
             if (camPhi - 5 > -90) {
                 camPhi -= 5;
-                lookDir = v3f(1,0,0).rotateZ(camPhi).rotateY(camTheta);
+                lookDir = v3<float>(1,0,0).rotateZ(camPhi).rotateY(camTheta);
                 glutPostRedisplay();
             }
             break;
@@ -158,14 +159,14 @@ void specialKey(const int c, const int x, const int y){
             camTheta += 5;
             if (camTheta < 0)
                 camTheta += 360;
-            lookDir = v3f(1,0,0).rotateZ(camPhi).rotateY(camTheta);
+            lookDir = v3<float>(1,0,0).rotateZ(camPhi).rotateY(camTheta);
             glutPostRedisplay();
             break;
         case GLUT_KEY_RIGHT:
             camTheta -= 5;
             if (camTheta >= 360)
                 camTheta -= 360;
-            lookDir = v3f(1,0,0).rotateZ(camPhi).rotateY(camTheta);
+            lookDir = v3<float>(1,0,0).rotateZ(camPhi).rotateY(camTheta);
             glutPostRedisplay();
             break;
             
@@ -184,7 +185,7 @@ int main(int argc, char** argv) {
     glutFullScreen();
     glutKeyboardFunc(key);
     glutSpecialFunc(specialKey);
-    //glutTimerFunc(1000.0/fps, newFrame, 0);
+    glutTimerFunc(1000.0/fps, newFrame, 0);
     glutReshapeFunc(resizeFunc);
     
     init();
