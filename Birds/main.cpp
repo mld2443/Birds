@@ -21,7 +21,9 @@ bool play;
 GLfloat c_ratio;
 float movespeed;
 int camPhi, camTheta;
-v3<float> eyePos, lookDir;
+v3<float> eyePos, lookDir, offset;
+bool follow;
+unsigned int follow_flock;
 
 // scene data
 int window;
@@ -30,6 +32,11 @@ terrarium t;
 void display() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glPushMatrix();
+    
+    if (follow) {
+        lookDir = t.camera_dir(follow_flock).rotateX(camPhi).rotateY(camTheta);;
+        eyePos = t.camera_pos(follow_flock) - (lookDir * 200);
+    }
     
     gluLookAt(eyePos.x, eyePos.y, eyePos.z, (eyePos+lookDir).x, (eyePos+lookDir).y, (eyePos+lookDir).z, 0, 1, 0);
     
@@ -54,17 +61,20 @@ void init() {
     glLoadIdentity();
     
     // simulation timing
-    steps_per_frame = 1;
+    steps_per_frame = 2;
     fps = 60.0;
     timestep = 1.0/(fps * steps_per_frame);
     play = true;
     
     // looking and movement
     movespeed = 10.0;
-    camTheta = 315;
-    camPhi = -30;
-    lookDir = v3<float>(1, 0, 0).rotateZ(camPhi).rotateY(camTheta);
-    eyePos = {4500, 500, 4500};
+    follow_flock = 0;
+    //camTheta = 315;
+    //camPhi = -30;
+    //lookDir = v3<float>(1, 0, 0).rotateZ(camPhi).rotateY(camTheta);
+    //eyePos = {4500, 500, 4500};
+    offset = {0,80,0};
+    follow = true;
     
     t = terrarium();
 }
@@ -98,6 +108,19 @@ void key(const unsigned char c, const int x, const int y) {
         case 27:
             glutDestroyWindow(window);
             exit(0);
+            break;
+            
+        case 'c':
+            follow = !follow;
+            if (follow) {
+                camTheta = 315;
+                camPhi = -30;
+            } else {
+                camTheta = 315;
+                camPhi = -30;
+                lookDir = v3<float>(1, 0, 0).rotateZ(camPhi).rotateY(camTheta);
+                eyePos = {4500, 500, 4500};
+            }
             break;
             
         case 'w':
@@ -144,14 +167,16 @@ void specialKey(const int c, const int x, const int y){
         case GLUT_KEY_UP:
             if (camPhi + 5 < 90) {
                 camPhi += 5;
-                lookDir = v3<float>(1,0,0).rotateZ(camPhi).rotateY(camTheta);
+                if (!follow)
+                    lookDir = v3<float>(1,0,0).rotateZ(camPhi).rotateY(camTheta);
                 glutPostRedisplay();
             }
             break;
         case GLUT_KEY_DOWN:
             if (camPhi - 5 > -90) {
                 camPhi -= 5;
-                lookDir = v3<float>(1,0,0).rotateZ(camPhi).rotateY(camTheta);
+                if (!follow)
+                    lookDir = v3<float>(1,0,0).rotateZ(camPhi).rotateY(camTheta);
                 glutPostRedisplay();
             }
             break;
@@ -159,14 +184,16 @@ void specialKey(const int c, const int x, const int y){
             camTheta += 5;
             if (camTheta < 0)
                 camTheta += 360;
-            lookDir = v3<float>(1,0,0).rotateZ(camPhi).rotateY(camTheta);
+            if (!follow)
+                lookDir = v3<float>(1,0,0).rotateZ(camPhi).rotateY(camTheta);
             glutPostRedisplay();
             break;
         case GLUT_KEY_RIGHT:
             camTheta -= 5;
             if (camTheta >= 360)
                 camTheta -= 360;
-            lookDir = v3<float>(1,0,0).rotateZ(camPhi).rotateY(camTheta);
+            if (!follow)
+                lookDir = v3<float>(1,0,0).rotateZ(camPhi).rotateY(camTheta);
             glutPostRedisplay();
             break;
             

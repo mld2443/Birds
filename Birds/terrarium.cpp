@@ -11,11 +11,10 @@
 
 void terrarium::draw_lights() {
     // Set up lights
-    GLfloat light0color[] = { 0.8, 0.8, 0.7 };
-    //GLfloat light0color[] = { 1, 1, 1 };
-    GLfloat light0pos[] = { 500, 500, 0 };
+    GLfloat light0color[] = { 0.9, 0.9, 0.8 };
+    GLfloat light0pos[] = { 5000, 10000, 5000 };
     GLfloat light1color[] = { 0.4, 0.4, 0.2 };
-    GLfloat light1pos[] = { 303, 300, 300 };
+    GLfloat light1pos[] = { 300, 300, 300 };
     glLightfv(GL_LIGHT0, GL_POSITION, light0pos);
     glLightfv(GL_LIGHT0, GL_AMBIENT, light0color);
     glLightfv(GL_LIGHT0, GL_DIFFUSE, light0color);
@@ -32,10 +31,10 @@ void terrarium::draw_ground() {
     GLfloat gnd_specular[] = { 0.0, 0.0, 0.0 };
     GLfloat gnd_shininess[] = { 0.0 };
     
-    GLfloat water_ambient[] = { 0.0, 0.0, 0.0 };
-    GLfloat water_diffuse[] = { 0.0, 0.0, 0.0 };
+    GLfloat water_ambient[] = { 0.2, 0.2, 0.3 };
+    GLfloat water_diffuse[] = { 0.1, 0.1, 0.3 };
     GLfloat water_specular[] = { 0.5, 0.5, 1.0 };
-    GLfloat water_shininess[] = { 0.0 };
+    GLfloat water_shininess[] = { 10.0 };
     
     glMaterialfv(GL_FRONT, GL_AMBIENT, gnd_ambient);
     glMaterialfv(GL_FRONT, GL_DIFFUSE, gnd_diffuse);
@@ -219,12 +218,16 @@ terrarium::terrarium(): airspace(grid(400,8,400)) {
     rdepth = 5000;
     rwidth = 25;
     
-    flocks.push_back(flock(airspace,100,5000,100,5000,60,0.01,0.1,0.01,v3<double>(0,0.5,-0.5)));
+    wind = {0.0, 0.0, 10.0};
+    windc = 0.1;
+    
+    flocks.push_back(flock(airspace,100, 5000,100,4000,60, 4.0,1.0,0.05, v3<double>(9000,0,8000), wind,windc, v3<double>(0.0,0.0,80.0),0.7));
+    //flocks.push_back(flock(airspace,120, 4000,100,5000,60, 10.0,0.4,0.008, v3<double>(0.0,0.0,60.0), wind,windc, v3<double>(50.0,2.0,0.0),0.0));
 }
 
-void terrarium::step(const float t) {
+void terrarium::step(const double t) {
     for (auto &f : flocks)
-        f.calc_velocities(airspace, 1, t);
+        f.calc_velocities(airspace, 2, t);
     
     for (auto &f : flocks)
         f.integrate(t);
@@ -250,4 +253,14 @@ void terrarium::draw() {
     
     for (auto &f : flocks)
         f.draw();
+}
+
+v3<float> terrarium::camera_pos(unsigned int f) {
+    v3<double> d = flocks[f].get_center();
+    return v3<float>(d.x,d.y,d.z);
+}
+
+v3<float> terrarium::camera_dir(unsigned int f) {
+    v3<double> v = flocks[f].get_vel().normalize();
+    return v3<float>(v.x,v.y,v.z);
 }

@@ -60,20 +60,26 @@ public:
         return {x/a, y/a, z/a};
     }
     
-    T abs() const {
+    double abs() const {
         return sqrt(x*x + y*y + z*z);
     }
     
     v3<T> normalize() const {
-        T len = abs();
-        return {x/len, y/len, z/len};
+        double len = abs();
+        return v3<T>(x/len, y/len, z/len);
     }
     
-    T dot(const v3<T>& a) {
+    double dot(const v3<T>& a) const {
         return x*a.x + y*a.y + z*a.z;
     }
     
-    v3<T> cross(const v3<T>& a) {
+    double angle(const v3<T>& v_2) const {
+        double a = abs();
+        double b = v_2.abs();
+        return (180.0/PI) * acos(dot(v_2)/(a * b));
+    }
+    
+    v3<T> cross(const v3<T>& a) const {
         return {y*a.z - z*a.y, z*a.x - x*a.z, x*a.y - y*a.x};
     }
     

@@ -22,7 +22,8 @@ private:
     float ldepth, lwidth, rdepth, rwidth;
     //GLUquadricObj *quadric;
     
-    
+    v3<double> wind;
+    double windc;
     grid airspace;
     vector<flock> flocks;
     
@@ -34,10 +35,13 @@ private:
 public:
     terrarium();
     
-    void step(const float t);
+    void step(const double t);
     
     void draw();
     
+    v3<float> camera_pos(unsigned int f);
+
+    v3<float> camera_dir(unsigned int f);
 };
 
 #endif /* terrarium_h */
