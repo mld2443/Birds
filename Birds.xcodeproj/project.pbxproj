@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		C929EF601BCF88B0008095E3 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C929EF5F1BCF88B0008095E3 /* main.cpp */; };
+		C929EF671BCF88CD008095E3 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C929EF661BCF88CC008095E3 /* GLUT.framework */; };
+		C929EF691BCF88D2008095E3 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C929EF681BCF88D2008095E3 /* OpenGL.framework */; };
+		C929EF6C1BCF8906008095E3 /* terrarium.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C929EF6B1BCF8906008095E3 /* terrarium.cpp */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +28,14 @@
 /* Begin PBXFileReference section */
 		C929EF5C1BCF88B0008095E3 /* Birds */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Birds; sourceTree = BUILT_PRODUCTS_DIR; };
 		C929EF5F1BCF88B0008095E3 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		C929EF661BCF88CC008095E3 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
+		C929EF681BCF88D2008095E3 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		C929EF6A1BCF88E1008095E3 /* terrarium.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = terrarium.h; sourceTree = "<group>"; };
+		C929EF6B1BCF8906008095E3 /* terrarium.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = terrarium.cpp; sourceTree = "<group>"; };
+		C929EF6D1BCF8919008095E3 /* v3f.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = v3f.h; sourceTree = "<group>"; };
+		C929EF6E1BCF892F008095E3 /* bird.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = bird.h; sourceTree = "<group>"; };
+		C929EF6F1BCF8944008095E3 /* flock.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = flock.h; sourceTree = "<group>"; };
+		C929EF701BCF895C008095E3 /* grid.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = grid.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -32,6 +43,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C929EF691BCF88D2008095E3 /* OpenGL.framework in Frameworks */,
+				C929EF671BCF88CD008095E3 /* GLUT.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -41,6 +54,8 @@
 		C929EF531BCF88B0008095E3 = {
 			isa = PBXGroup;
 			children = (
+				C929EF681BCF88D2008095E3 /* OpenGL.framework */,
+				C929EF661BCF88CC008095E3 /* GLUT.framework */,
 				C929EF5E1BCF88B0008095E3 /* Birds */,
 				C929EF5D1BCF88B0008095E3 /* Products */,
 			);
@@ -58,6 +73,12 @@
 			isa = PBXGroup;
 			children = (
 				C929EF5F1BCF88B0008095E3 /* main.cpp */,
+				C929EF6A1BCF88E1008095E3 /* terrarium.h */,
+				C929EF6B1BCF8906008095E3 /* terrarium.cpp */,
+				C929EF6D1BCF8919008095E3 /* v3f.h */,
+				C929EF6E1BCF892F008095E3 /* bird.h */,
+				C929EF6F1BCF8944008095E3 /* flock.h */,
+				C929EF701BCF895C008095E3 /* grid.h */,
 			);
 			path = Birds;
 			sourceTree = "<group>";
@@ -119,6 +140,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C929EF601BCF88B0008095E3 /* main.cpp in Sources */,
+				C929EF6C1BCF8906008095E3 /* terrarium.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
