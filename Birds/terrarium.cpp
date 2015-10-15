@@ -218,11 +218,17 @@ terrarium::terrarium(): airspace(grid(400,8,400)) {
     rdepth = 5000;
     rwidth = 25;
     
-    wind = {0.0, 0.0, 10.0};
+    /*wind = {0.0, 5.0, 0.0};
+    windc = 0.0;
+    
+    flocks.push_back(flock(airspace,150, 4800,100,4200,60, 4.0,0.8,0.08, v3<double>(6000,0,10000), wind,windc, v3<double>(0.0,0.0,80.0),0.0,50.0));
+    flocks.push_back(flock(airspace,120, 4200,120,4800,60, 4.0,0.8,0.08, v3<double>(10000,0,6000), wind,windc, v3<double>(80.0,0.0,0.0),0.0,-50.0));*/
+    
+    wind = {0.0, 0.0, 0.0};
     windc = 0.1;
     
-    flocks.push_back(flock(airspace,100, 5000,100,4000,60, 4.0,1.0,0.05, v3<double>(9000,0,8000), wind,windc, v3<double>(0.0,0.0,80.0),0.7));
-    //flocks.push_back(flock(airspace,120, 4000,100,5000,60, 10.0,0.4,0.008, v3<double>(0.0,0.0,60.0), wind,windc, v3<double>(50.0,2.0,0.0),0.0));
+    flocks.push_back(flock(airspace,80, 4800,100,4200,60, 6.0,0.8,0.08, v3<double>(6000,0,10000), wind,windc, v3<double>(0.0,0.0,80.0),0.0,50.0));
+    flocks.push_back(flock(airspace,90, 4200,120,4800,60, 4.0,0.8,0.08, v3<double>(10000,0,6000), wind,windc, v3<double>(80.0,0.0,0.0),0.0,-50.0));
 }
 
 void terrarium::step(const double t) {

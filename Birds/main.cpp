@@ -61,7 +61,7 @@ void init() {
     glLoadIdentity();
     
     // simulation timing
-    steps_per_frame = 2;
+    steps_per_frame = 3;
     fps = 60.0;
     timestep = 1.0/(fps * steps_per_frame);
     play = true;
@@ -181,17 +181,17 @@ void specialKey(const int c, const int x, const int y){
             }
             break;
         case GLUT_KEY_LEFT:
-            camTheta += 5;
-            if (camTheta < 0)
-                camTheta += 360;
+            camTheta -= 5;
+            if (camTheta >= 360)
+                camTheta -= 360;
             if (!follow)
                 lookDir = v3<float>(1,0,0).rotateZ(camPhi).rotateY(camTheta);
             glutPostRedisplay();
             break;
         case GLUT_KEY_RIGHT:
-            camTheta -= 5;
-            if (camTheta >= 360)
-                camTheta -= 360;
+            camTheta += 5;
+            if (camTheta < 0)
+                camTheta += 360;
             if (!follow)
                 lookDir = v3<float>(1,0,0).rotateZ(camPhi).rotateY(camTheta);
             glutPostRedisplay();

@@ -14,8 +14,8 @@
 #define R1 20
 #define R2 50
 
-#define T1 180
-#define T2 180
+#define T1 15
+#define T2 170
 
 using namespace std;
 
@@ -23,6 +23,12 @@ class bird {
 private:
     v3<double> pos, vel, accel;
     double mass;
+    
+    v3<double> get_wind(const v3<double> wind){
+        return v3<double>(wind.x,
+                          wind.y * sin((pos.x+pos.z)*PI/90),
+                          wind.z);
+    }
     
     double d_coef(const double d) {
         if (d < R1)
@@ -56,7 +62,8 @@ public:
                        v3<double> goal,
                        const double t) {
         v3<double> v_tan = (pos - f_p).cross(f_v).normalize() * s_tan;
-        accel = ((wind - vel) * (windc/mass));
+        auto w = get_wind(wind);
+        accel = ((w - vel) * (windc/mass));
         
         list<v3<double>> accels;
         for (auto &neighbor : nearby) {
@@ -65,11 +72,11 @@ public:
                 auto u_x = x.normalize();
                 auto d = x.abs();
                 
-                //double k_dt = d_coef(d) * t_coef(vel.angle(x));
+                double k_dt = d_coef(d) * t_coef(vel.angle(x));
                 
-                auto Aa = (u_x * - (ka / d));
-                auto Av = ((neighbor->vel - vel) * kv);
-                auto Ac = (x * kc);
+                auto Aa = (u_x * - (ka / d)) * k_dt;
+                auto Av = ((neighbor->vel - vel) * kv) * k_dt;
+                auto Ac = (x * kc) * k_dt;
                 
                 accels.push_back((Aa + Av + Ac)/mass);
             }
@@ -77,11 +84,11 @@ public:
         
         for (auto &a : accels) accel += a;
         
-        //if (pos.y < 20) accel += v3<double>(0,20 / pos.y,0);
-        //if (pos.y > 180) accel -= v3<double>(0,20 / (200 - pos.y),0);
+        if (pos.y < 20) accel += v3<double>(0,20 / pos.y,0);
+        if (pos.y > 180) accel -= v3<double>(0,20 / (200 - pos.y),0);
         
-        goal.y = pos.y;
-        accel += (goal - pos).normalize() * 10;
+        //goal.y = pos.y;
+        //accel += (goal - pos).normalize() * 10;
         vel += v_tan + accel * t;
     }
     

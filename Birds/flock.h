@@ -37,7 +37,7 @@ private:
         
         v3<double> pshpere(R * cos(T), Y, R * sin(T));
         
-        return v3<double>(x,y,z) + pshpere * d;
+        return pshpere * d;
     }
     
 public:
@@ -47,10 +47,15 @@ public:
           const float ka, const float kv, const float kc,
           v3<double> goal_,
           v3<double> w = v3<double>(), double wc = 0.0,
-          v3<double> v = v3<double>(), double s_t = 0.0): k_a(ka), k_v(kv), k_c(kc), goal(goal_), wind(w), windc(wc), s_tan(s_t)
+          v3<double> v = v3<double>(), double s_t = 0.0,
+          const double is_t = 0.0):
+    k_a(ka), k_v(kv), k_c(kc), goal(goal_), wind(w), windc(wc), s_tan(s_t)
     {
-        for (unsigned long i = 0; i < size; i++)
-            birds.push_back(bird(spawn_p(x,y,z,d), v));
+        for (unsigned long i = 0; i < size; i++) {
+            auto p = spawn_p(x,y,z,d);
+            auto v_t = (p/d).cross(v.normalize()) * is_t;
+            birds.push_back(bird(v3<double>(x,y,z) + p, v + v_t));
+        }
         for (auto &b : birds)
             g.add_bird(b.get_pos().x/25, b.get_pos().y/25, b.get_pos().z/25, &b);
     }
