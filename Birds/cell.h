@@ -3,6 +3,7 @@
 //  Birds
 //
 //  Created by Matthew Dillard on 10/15/15.
+//  this is the basic spatial division
 //
 
 #ifndef cell_h

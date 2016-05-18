@@ -3,6 +3,7 @@
 //  Birds
 //
 //  Created by Matthew Dillard on 10/14/15.
+//  This is each group of boids
 //
 
 #ifndef flock_h
@@ -24,6 +25,7 @@ private:
     float k_a, k_v, k_c;
     v3<double> wind, goal;
     float windc, s_tan;
+    double a_res;
     
     default_random_engine eng;
         
@@ -44,15 +46,17 @@ public:
     flock(grid &g, const unsigned long size,
           const float x, const float y, const float z,
           const float d,
-          const float ka, const float kv, const float kc,
+          const float ka, const float kv, const float kc, const double ar,
           v3<double> goal_,
           v3<double> w = v3<double>(), double wc = 0.0,
           v3<double> v = v3<double>(), double s_t = 0.0,
           const double is_t = 0.0):
-    k_a(ka), k_v(kv), k_c(kc), goal(goal_), wind(w), windc(wc), s_tan(s_t)
+    k_a(ka), k_v(kv), k_c(kc), a_res(ar), goal(goal_), wind(w), windc(wc), s_tan(s_t)
     {
         for (unsigned long i = 0; i < size; i++) {
             auto p = spawn_p(x,y,z,d);
+            
+            //tangential vortex force
             auto v_t = (p/d).cross(v.normalize()) * is_t;
             birds.push_back(bird(v3<double>(x,y,z) + p, v + v_t));
         }
@@ -77,7 +81,7 @@ public:
                             if (g.get_cell(x,y,z).check())
                                 nearby.insert(nearby.begin(), g.get_cell(x,y,z).bird_begin(), g.get_cell(x,y,z).bird_end());
             
-            b.calc_velocity(nearby, k_a, k_v, k_c, wind, windc, cen, vel, s_tan, goal, t);
+            b.calc_velocity(nearby, k_a, k_v, k_c, a_res, wind, windc, cen, vel, s_tan, goal, t);
         }
     }
     

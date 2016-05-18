@@ -21,7 +21,7 @@ bool play;
 GLfloat c_ratio;
 float movespeed;
 int camPhi, camTheta;
-v3<float> eyePos, lookDir, offset;
+v3<float> eyePos, lookDir;
 bool follow;
 unsigned int follow_flock;
 
@@ -61,7 +61,8 @@ void init() {
     glLoadIdentity();
     
     // simulation timing
-    steps_per_frame = 3;
+    // feel free to change these, more steps/frame means more accurate simulation
+    steps_per_frame = 1;
     fps = 60.0;
     timestep = 1.0/(fps * steps_per_frame);
     play = true;
@@ -69,11 +70,6 @@ void init() {
     // looking and movement
     movespeed = 10.0;
     follow_flock = 0;
-    //camTheta = 315;
-    //camPhi = -30;
-    //lookDir = v3<float>(1, 0, 0).rotateZ(camPhi).rotateY(camTheta);
-    //eyePos = {4500, 500, 4500};
-    offset = {0,80,0};
     follow = true;
     
     t = terrarium();
@@ -101,6 +97,12 @@ void newFrame(const int id) {
 }
 
 void key(const unsigned char c, const int x, const int y) {
+    //space - play/pause
+    //c - toggle free camera
+    //1 - toggle which flock to follow, (make sure not to press this unless there's at least 2 flocks)
+    //wasd - move camera in free camera
+    //arrows - look aroud
+    //esc - exit
     switch (c) {
         case ' ':
             play = !play;

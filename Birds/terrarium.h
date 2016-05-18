@@ -3,6 +3,7 @@
 //  Birds
 //
 //  Created by Matthew Dillard on 10/12/15.
+//  this class is really only to make my main file manageable
 //
 
 #ifndef terrarium_h

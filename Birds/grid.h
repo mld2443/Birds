@@ -3,6 +3,8 @@
 //  Birds
 //
 //  Created by Matthew Dillard on 10/14/15.
+//  This is just to hold the 3D grid vector with a layer of obfuscation
+//  I only have one grid which all flocks share
 //
 
 #ifndef grid_h

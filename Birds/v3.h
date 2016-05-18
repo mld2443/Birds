@@ -3,6 +3,7 @@
 //  Birds
 //
 //  Created by Matthew Dillard on 10/15/15.
+//  self explainatory
 //
 
 #ifndef v3_h

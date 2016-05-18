@@ -3,6 +3,7 @@
 //  Birds
 //
 //  Created by Matthew Dillard on 10/12/15.
+//  this class is really only to make my main file manageable
 //
 
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
@@ -26,8 +27,8 @@ void terrarium::draw_lights() {
 }
 
 void terrarium::draw_ground() {
-    GLfloat gnd_ambient[] = { 0.9, 0.8, 0.5 };
-    GLfloat gnd_diffuse[] = { 0.0, 0.0, 0.0 };
+    GLfloat gnd_ambient[] = { 0.2, 0.4, 0.2 };
+    GLfloat gnd_diffuse[] = { 0.0, 0.2, 0.0 };
     GLfloat gnd_specular[] = { 0.0, 0.0, 0.0 };
     GLfloat gnd_shininess[] = { 0.0 };
     
@@ -218,27 +219,37 @@ terrarium::terrarium(): airspace(grid(400,8,400)) {
     rdepth = 5000;
     rwidth = 25;
     
+    // this is where the bulk of customization is to be made, I have made a few demos
+    // flock( airspace,#num of particles,
+    //        x,y,z of center spawn, spawn radius,
+    //        k_a, k_v, and k_c, acceleration limit,
+    //        coordinate of goal pole (y is ignored),
+    //        wind, the wind coeficient,
+    //        initial starting velocity, tangential acceleration, and initial tangential velocity factor );
+    
     /*wind = {0.0, 5.0, 0.0};
     windc = 0.0;
     
-    flocks.push_back(flock(airspace,150, 4800,100,4200,60, 4.0,0.8,0.08, v3<double>(6000,0,10000), wind,windc, v3<double>(0.0,0.0,80.0),0.0,50.0));
-    flocks.push_back(flock(airspace,120, 4200,120,4800,60, 4.0,0.8,0.08, v3<double>(10000,0,6000), wind,windc, v3<double>(80.0,0.0,0.0),0.0,-50.0));*/
+    flocks.push_back(flock(airspace,150, 4800,100,4200,60, 4.0,0.8,0.08,1000, v3<double>(6000,0,10000), wind,windc, v3<double>(0.0,0.0,80.0),0.0,50.0));
+    flocks.push_back(flock(airspace,120, 4200,120,4800,60, 4.0,0.8,0.08,1000, v3<double>(10000,0,6000), wind,windc, v3<double>(80.0,0.0,0.0),0.0,-50.0));*/
     
-    /*wind = {-10.0, 80.0, 0.0};
+    wind = {-10.0, 100.0, 0.0};
     windc = 0.1;
     
-    flocks.push_back(flock(airspace,150, 4800,100,4200,60, 6.0,0.8,0.08, v3<double>(6000,0,10000), wind,windc, v3<double>(0.0,0.0,80.0),0.0,50.0));*/
+    flocks.push_back(flock(airspace,150, 4800,100,4200,60, 6.0,0.8,0.08,1000, v3<double>(6000,0,10000), wind,windc, v3<double>(0.0,0.0,80.0),-0.1,50.0));
 
-    wind = {00.0, 0.0, 0.0};
+    /*wind = {00.0, 0.0, 0.0};
     windc = 0.1;
     
-    flocks.push_back(flock(airspace,80, 4800,100,4200,60, 6.0,0.8,0.08, v3<double>(6000,0,10000), wind,windc, v3<double>(0.0,0.0,80.0),0.0,50.0));
-    flocks.push_back(flock(airspace,90, 4200,120,4800,60, 4.0,0.8,0.08, v3<double>(10000,0,6000), wind,windc, v3<double>(80.0,0.0,0.0),0.0,-50.0));
+    flocks.push_back(flock(airspace,80, 4800,100,4200,60, 6.0,0.8,0.08,20, v3<double>(6000,0,10000), wind,windc, v3<double>(0.0,0.0,80.0),0.0,50.0));
+    flocks.push_back(flock(airspace,90, 4200,120,4800,60, 4.0,0.8,0.08,20, v3<double>(10000,0,6000), wind,windc, v3<double>(80.0,0.0,0.0),0.0,-50.0));*/
 }
 
 void terrarium::step(const double t) {
     for (auto &f : flocks)
         f.calc_velocities(airspace, 2, t);
+    // this magic number above is the "radius" of the boid influence sphere
+    // changing it to be 1 or 3 will increase the sphere, I'd recommend also changing R1 and R2 in birds.h
     
     for (auto &f : flocks)
         f.integrate(t);
@@ -252,13 +263,14 @@ void terrarium::draw() {
     draw_lights();
     draw_ground();
     //draw_tree(5070, 0, 5055);
-    draw_rock(4700,0,4700,30,70,50,0);
-    draw_rock(4710,0,4695,50,50,40,0);
+    draw_rock(5300,0,4700,30,70,50,0);
+    draw_rock(5290,0,4695,50,50,40,0);
+    
     draw_rock(6500,0,5600,45,70,50,75);
+    draw_rock(4800,0,7200,35,40,70,165);
     draw_rock(4400,0,5100,30,60,30,40);
     draw_rock(3800,0,3200,20,70,50,90);
     draw_rock(4750,0,4100,50,70,50,300);
-    
     draw_rock(2000,0,5600,60,100,80,45);
     draw_rock(2500,0,4700,40,30,60,200);
     
