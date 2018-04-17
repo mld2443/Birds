@@ -14,22 +14,22 @@
 
 class cell {
 private:
-    list<bird*> birds;
-    float potential;
+    std::list<bird*> m_birds;
+    float m_potential;
     
 public:
-    cell(const float p = 0.0): potential(p) {}
+    cell(const float p = 0.0): m_potential(p) {}
     
-    float get_potential() const { return potential; }
-    bool check() const { return birds.size(); }
-    list<bird*>::iterator bird_begin() { return birds.begin(); }
-    list<bird*>::iterator bird_end() { return birds.end(); }
+    float get_potential() const { return m_potential; }
+    bool check() const { return m_birds.size(); }
+    std::list<bird*>::iterator bird_begin() { return m_birds.begin(); }
+    std::list<bird*>::iterator bird_end() { return m_birds.end(); }
     
-    void add_potential(const float p) { potential += p; }
-    void add_bird(bird* b) { birds.push_back(b); }
+    void add_potential(const float p) { m_potential += p; }
+    void add_bird(bird* b) { m_birds.push_back(b); }
     bird* pop_bird() {
-        bird* b = birds.front();
-        birds.pop_front();
+        bird* b = m_birds.front();
+        m_birds.pop_front();
         return b;
     }
 };
