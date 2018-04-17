@@ -8,7 +8,7 @@
 #include "cell.h"
 
 /// Cell constructor
-cell::cell(const float p): m_potential(p) {}
+cell::cell(const float p): m_potential(p), m_birds(std::list<bird*>()) {}
 
 
 /// Returns potential of this cell
