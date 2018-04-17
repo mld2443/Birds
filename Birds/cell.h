@@ -1,37 +1,50 @@
-//
-//  cell.h
-//  Birds
-//
-//  Created by Matthew Dillard on 10/15/15.
-//  this is the basic spatial division
-//
+///////////////////////////////////////////////
+//  cell.h                                   //
+//  Birds                                    //
+//                                           //
+//  Created by Matthew Dillard on 10/15/15.  //
+///////////////////////////////////////////////
 
 #ifndef cell_h
 #define cell_h
 
+//////////////
+// Includes //
+//////////////
+
 #include <list>
+
 #include "bird.h"
 
+
+//////////////////////
+// Class Definition //
+//////////////////////
+
+/// The basic container to identify nearby boids
 class cell {
 private:
+    /// List of all boids currently inside this cell
     std::list<bird*> m_birds;
+    
+    /// Potential is the measure of how much this cell is avoided
     float m_potential;
     
 public:
-    cell(const float p = 0.0): m_potential(p) {}
+    cell(const float p = 0.0);
     
-    float get_potential() const { return m_potential; }
-    bool check() const { return m_birds.size(); }
-    std::list<bird*>::iterator bird_begin() { return m_birds.begin(); }
-    std::list<bird*>::iterator bird_end() { return m_birds.end(); }
+    // List operations
+    bool check() const;
+    std::list<bird*>::iterator bird_begin();
+    std::list<bird*>::iterator bird_end();
     
-    void add_potential(const float p) { m_potential += p; }
-    void add_bird(bird* b) { m_birds.push_back(b); }
-    bird* pop_bird() {
-        bird* b = m_birds.front();
-        m_birds.pop_front();
-        return b;
-    }
+    // Get or modify potential
+    float get_potential() const;
+    void add_potential(const float p);
+    
+    // Add or remove boids
+    void add_bird(bird* b);
+    bird* pop_bird();
 };
 
 #endif /* cell_h */

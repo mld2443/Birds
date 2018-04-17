@@ -15,6 +15,7 @@
 		C98E79C12086617400C29811 /* bird.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C98E79C02086617400C29811 /* bird.cpp */; };
 		C98E79C32086699300C29811 /* flock.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C98E79C22086699300C29811 /* flock.cpp */; };
 		C98E79C520866F3E00C29811 /* grid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C98E79C420866F3E00C29811 /* grid.cpp */; };
+		C98E79C720868B5A00C29811 /* cell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C98E79C620868B5A00C29811 /* cell.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -45,6 +46,7 @@
 		C98E79C02086617400C29811 /* bird.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = bird.cpp; sourceTree = "<group>"; };
 		C98E79C22086699300C29811 /* flock.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = flock.cpp; sourceTree = "<group>"; };
 		C98E79C420866F3E00C29811 /* grid.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = grid.cpp; sourceTree = "<group>"; };
+		C98E79C620868B5A00C29811 /* cell.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = cell.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +93,7 @@
 				C929EF701BCF895C008095E3 /* grid.h */,
 				C98E79C420866F3E00C29811 /* grid.cpp */,
 				C929EF711BCF9F86008095E3 /* cell.h */,
+				C98E79C620868B5A00C29811 /* cell.cpp */,
 				C98E79BF20865C5B00C29811 /* float3.h */,
 				C98E79BD20865C4B00C29811 /* float3.cpp */,
 			);
@@ -159,6 +162,7 @@
 				C98E79C12086617400C29811 /* bird.cpp in Sources */,
 				C929EF6C1BCF8906008095E3 /* terrarium.cpp in Sources */,
 				C98E79C520866F3E00C29811 /* grid.cpp in Sources */,
+				C98E79C720868B5A00C29811 /* cell.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

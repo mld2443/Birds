@@ -16,7 +16,7 @@ float3 bird::get_wind(const float3 wind){
 }
 
 
-///
+/// Determines how much influence nearby boid applies
 float bird::d_coef(const float d) const {
     if (d < R1)
         return 1.f;
@@ -26,7 +26,7 @@ float bird::d_coef(const float d) const {
         return 0.f;
 }
 
-///
+/// Determines how well current boid can see nearby boid
 float bird::t_coef(const float angle) const {
     if (-T1 <= angle && angle <= T1)
         return 1.f;
@@ -36,7 +36,7 @@ float bird::t_coef(const float angle) const {
         return 0.f;
 }
 
-///
+/// Aggregate competing influences for boid.
 void bird::aggregate(float3 final_a, float3 final_v, float3 final_c, float a_res) {
     float f_a_len = final_a.abs(), f_v_len = final_v.abs(), f_c_len = final_c.abs();
     

@@ -29,9 +29,9 @@ void terrarium::draw_lights() const {
     glLightfv(GL_LIGHT1, GL_SPECULAR, light1color);
 }
 
-/// Draws a desert-like ground with a small stream down the middle
+/// Draws a contrasting grass-like ground with a small stream down the middle
 void terrarium::draw_ground() const {
-    // Desert colors
+    // Grass colors
     const GLfloat gnd_ambient[] = { 0.2f, 0.4f, 0.2f };
     const GLfloat gnd_diffuse[] = { 0.f, 0.2f, 0.f };
     const GLfloat gnd_specular[] = { 0.f, 0.f, 0.f };
