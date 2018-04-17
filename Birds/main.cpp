@@ -1,16 +1,26 @@
-//
-//  main.cpp
-//  Birds
-//
-//  Created by Matthew Dillard on 10/12/15.
-//
+///////////////////////////////////////////////
+//  main.cpp                                 //
+//  Birds                                    //
+//                                           //
+//  Created by Matthew Dillard on 10/12/15.  //
+///////////////////////////////////////////////
 
+// Stops clang warnings about using OpenGL and GLUT
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+
+//////////////
+// Includes //
+//////////////
 
 #include <GLUT/GLUT.h>
 #include <OpenGL/gl.h>
-#include <stdlib.h>
+
 #include "terrarium.h"
+
+
+/////////////
+// Globals //
+/////////////
 
 // timing information
 unsigned int steps_per_frame;
@@ -29,6 +39,8 @@ unsigned int follow_flock;
 int window;
 terrarium t;
 
+
+/// Designated OpenGL update function. Called to draw every frame.
 void display() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glPushMatrix();
@@ -46,6 +58,7 @@ void display() {
     glutSwapBuffers();
 }
 
+/// Simulation initialization
 void init() {
     // Enable Z-buffering, backface culling, and lighting
     glEnable(GL_DEPTH_TEST);
@@ -63,7 +76,7 @@ void init() {
     // simulation timing
     // feel free to change these, more steps/frame means more accurate simulation
     steps_per_frame = 1;
-    fps = 60.0;
+    fps = 60.0; // More of a suggestion
     timestep = 1.0/(fps * steps_per_frame);
     play = true;
     
@@ -75,12 +88,16 @@ void init() {
     t = terrarium();
 }
 
+/// Designated OpenGL window resize function. Called every time the window is resized
 void resizeFunc(GLint newWidth, GLint newHeight) {
     c_ratio = (GLfloat)newWidth/(GLfloat)newHeight;
     init();
     glutPostRedisplay();
 }
 
+
+/// Primary Simulation happens here. A callback is set up to be called at every desired frame.
+/// If the frame calculation pipeline is faster than desired FPS, the callback caps the framerate.
 void newFrame(const int id) {
     glutTimerFunc(1000.0/fps, newFrame, 1);
     
@@ -92,10 +109,12 @@ void newFrame(const int id) {
             step++;
         }
         
+        // Primary frame refresh
         glutPostRedisplay();
     }
 }
 
+/// Designated GLUT keyboard input callback.
 void key(const unsigned char c, const int x, const int y) {
     //space - play/pause
     //c - toggle free camera
@@ -170,6 +189,7 @@ void key(const unsigned char c, const int x, const int y) {
     }
 }
 
+/// Designated GLUT special key callback.
 void specialKey(const int c, const int x, const int y){
     switch (c) {
         case GLUT_KEY_UP:
@@ -210,6 +230,8 @@ void specialKey(const int c, const int x, const int y){
     }
 }
 
+
+/// Main function, initializes the GLUT values, calls the initializer, and calls the main loop.
 int main(int argc, char** argv) {
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
