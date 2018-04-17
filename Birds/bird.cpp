@@ -1,10 +1,9 @@
-//
-//  bird.cpp
-//  Birds
-//
-//  Created by Matthew Dillard on 4/17/18.
-//  Copyright © 2018 Matthew Dillard. All rights reserved.
-//
+///////////////////////////////////////////////
+//  bird.cpp                                 //
+//  Birds                                    //
+//                                           //
+//  Created by Matthew Dillard on 10/14/15.  //
+///////////////////////////////////////////////
 
 #include "bird.h"
 
@@ -130,6 +129,7 @@ void bird::draw() const {
         glTranslatef(m_pos.x, m_pos.y, m_pos.z);
         
         // Size and shape are hard-coded
+        // I would never do this today, and frankly I'm surprised I did it then.
         
         float3 nose(m_vel.normalize() * 5.f);
         float3 left(m_vel.cross(float3(0.f,-1.f,0.f)).normalize());

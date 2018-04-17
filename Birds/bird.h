@@ -3,7 +3,6 @@
 //  Birds                                                     //
 //                                                            //
 //  Created by Matthew Dillard on 10/14/15.                   //
-//  The boid of my simulation, styled after a paper airplane  //
 ////////////////////////////////////////////////////////////////
 
 #ifndef bird_h
@@ -37,6 +36,7 @@
 // Class defenition //
 //////////////////////
 
+/// The boids of this simulation, represented by little paper airplanes
 class bird {
 private:
     float3 m_pos, m_vel, m_accel;

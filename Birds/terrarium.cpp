@@ -12,12 +12,6 @@
 
 /// Sets up the sun-like lighting.
 void terrarium::draw_lights() const {
-    // Light colors
-    const GLfloat light0color[] = { 0.9f, 0.9f, 0.8f };
-    const GLfloat light0pos[] = { 5000.f, 10000.f, 5000.f };
-    const GLfloat light1color[] = { 0.4f, 0.4f, 0.2f };
-    const GLfloat light1pos[] = { 300.f, 300.f, 300.f };
-    
     // Install lights
     glLightfv(GL_LIGHT0, GL_POSITION, light0pos);
     glLightfv(GL_LIGHT0, GL_AMBIENT, light0color);
@@ -31,18 +25,6 @@ void terrarium::draw_lights() const {
 
 /// Draws a contrasting grass-like ground with a small stream down the middle
 void terrarium::draw_ground() const {
-    // Grass colors
-    const GLfloat gnd_ambient[] = { 0.2f, 0.4f, 0.2f };
-    const GLfloat gnd_diffuse[] = { 0.f, 0.2f, 0.f };
-    const GLfloat gnd_specular[] = { 0.f, 0.f, 0.f };
-    const GLfloat gnd_shininess[] = { 0.f };
-    
-    // Water colors
-    const GLfloat water_ambient[] = { 0.2f, 0.2f, 0.3f };
-    const GLfloat water_diffuse[] = { 0.1f, 0.1f, 0.3f };
-    const GLfloat water_specular[] = { 0.5f, 0.5f, 1.f };
-    const GLfloat water_shininess[] = { 10.f };
-    
     glMaterialfv(GL_FRONT, GL_AMBIENT, gnd_ambient);
     glMaterialfv(GL_FRONT, GL_DIFFUSE, gnd_diffuse);
     glMaterialfv(GL_FRONT, GL_SPECULAR, gnd_specular);
@@ -86,11 +68,6 @@ void terrarium::draw_ground() const {
 /// Draws a rock, important as a landmark to keep track of scale
 void terrarium::draw_rock(const int x, const int y, const int z, const float h, const int w, const int l, const int r) const {
     // Define rock colors
-    const GLfloat rock_ambient[] = { 0.2f, 0.2f, 0.2f };
-    const GLfloat rock_diffuse[] = { 0.9f, 0.9f, 0.9f };
-    const GLfloat rock_specular[] = { 0.5f, 0.5f, 0.5f };
-    const GLfloat rock_shininess[] = { 1.f };
-    
     glMaterialfv(GL_FRONT, GL_AMBIENT, rock_ambient);
     glMaterialfv(GL_FRONT, GL_DIFFUSE, rock_diffuse);
     glMaterialfv(GL_FRONT, GL_SPECULAR, rock_specular);
